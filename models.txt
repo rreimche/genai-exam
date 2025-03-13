@@ -1,0 +1,5 @@
+https://huggingface.co/ncls-p/Qwen2.5-7B-blog-key-points 32K?
+https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct
+https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3 32768
+https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B/tree/main 16384
+https://huggingface.co/HuggingFaceH4/zephyr-7b-beta/tree/main a lot?

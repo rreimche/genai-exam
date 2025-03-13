@@ -1,0 +1,9 @@
+Paper criteria:
+
+arxiv
+End-to-End software development
+No other reviewed system as component
+Experimental evaluation 
+Comparison with other experiments
+At least 2 software process development paradigms: Waterfall, Agile
+

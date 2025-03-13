@@ -1,0 +1,95 @@
+\setcounter{page}{1}
+\section{Portfolio documentation}
+\label{sec:documentation}
+
+Compile a comprehensive documentation of your project, including all the project phases. You will need to explain every choice you made during the project and your thoughts about the results you get. You will introduce the results in suitable visualisation. Furthermore, you will need to explain which criteria you follow to build your prompts and how they affect the results. 
+
+Students write the entire documentation with sections, sub-sections, diagrams, etc in this section. Please write as comprehensively as possible. Head to the document 1\_documentation.tex. You are free to use as many subsections as required. We will not provide a template for documentation. 
+
+
+
+
+\paragraph{START}
+
+\subsection{Research and tool selection}
+
+\subsubsection{Software and Platforms}
+\label{choice:software}
+
+Our multi agent system is developed using the AutoGen\footnote{https://microsoft.github.io/autogen/stable/} framework from Microsoft. The framework allows fast and practical development of multi-agent LLM-based systems. This choice implicates the programming language we use, it is python. The version of the language corresponds to the one available by default on the Google Colab\footnote{https://colab.research.google.com} platform, that we use as runtime environment. The python version is 3 and the minor version is not shown by the runtime information panel or configuration options. Besides that we use the following python libraries:
+
+\begin{itemize}
+	\item arxiv (to get paper information from Arxiv\footnote{https://arxiv.org/})
+	\item requests (to get PDF files from Arxiv)
+	\item pymupdf (to parse PDF files)
+	\item bibtexparser (to parse bibtex references)
+\end{itemize}
+
+We also decided to use two model inference providers: Groq\footnote{https://groq.com} and HuggingFace\footnote{http://huggingface.co}. These choices, together with the choice of runtime environment are motivated by practicality: in our opinion it is more convenient to use free cloud-based infrastructure than to configure and maintain a local one.
+
+AutoGen is well documented and practical framework and Google Colab is a reliable platform which free tier is sufficient for the task. Besides that, we have already had good experiences with these tools during exercises. Pymupdf is one of the common libraties for parsing PDF files and bibtexparser is also used for parsing bibtex references. The other two libraries were the best know choices for the respective tasks.
+
+
+
+\subsubsection{LLM Model}
+\label{choice:model}
+
+To select models for our system we used the following criteria:
+
+\begin{itemize}
+	\item All models should be available without payment at least for non-commercial project  (as required by exam task statement).
+	\item Every model must be available at inference endpoints of either HuggingFace or Groq within free tiers.
+	\item The model used for the processing of paper texts must have context window larger than 30 000 tokens (because the longest paper among chosen amount for about 15 000 tokens and we wanted to have some slack to be sure, besides, 32 000 is one of the commonly used context lengths).
+	\item The model for tool-equipped agents must be tuned or at least allow for function calling (for the exam task requires at least some agents to use tools and such model would allow tool usage with less manual tuning).
+	\item The model for tool-equipped agents must be compatible with AutoGen framework (for this is the framework of choice, as described in~\ref{choice:software}.
+	\item Optionally, the model used for the processing of paper texts should be adapted for summarization. Even more preferrable, if it's trained for summarization using materials like the scientific datasets used in~\cite{Cohan_2018}). This requirement is optional, because text-to-text generating models can be used for summarizations to some extent even without specialized training, for this a one of the possible text-to-text tasks. At the same time, the exam task does not state that the model must be specifically targeted for text summarization, but that it must be cabaple of it.
+\end{itemize}
+
+We started by looking for a model for paper processing. Using the model search interface of~\cite{huggingface}, we have set the following search parameteers: 
+
+\begin{enumerate}
+	\item Tasks: Summarization or Text2Text generation
+	\item Other: HF Inference API
+	\item Language: we tried setting english language, but this has limited the search too much and excluded seemingly useful models that lack english language in model tags despite supporting it
+	\item Datasets: setting the ''tasks`` and ''other`` filters as described was limiting the search so much that we have omitted this filter
+	\item License: setting the ''tasks`` and ''other`` filters as described was limiting the search so much that we have omitted this filter
+	\item Libraries: since the filter does not have AutoGen framework, we left it empty
+\end{enumerate}
+
+This has left us no more than 10 possible models. After examining the model cards as well as configuration files of the model, we did not find any with a sufficient context length. The largest specified context length (4096) had the model ''google/bigbird-pegasus-large-arxiv`` used in~\cite{zaheer2021big}. For some models neither the card nor the files has given any reliable information. This forced us to further relax the filtering by also using ''Text generation`` in Tasks filter. The new filter configuration showed 48 possible models. We have examined the model cards and configurations one by one until we found 3 promising candidates:
+
+\begin{itemize}
+	\item deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B with 128K context window
+	\item meta-llama/Llama-3.3-70B-Instruct with 128K context window, instruction tuned, also supports tool usage
+	\item mistralai/Mistral-7B-Instruct-v0.3 with 32K context window, instruction tuned, supports tool usage
+\end{itemize}
+
+From these three we chose the latter, because it has a sufficient context length, supports tool usage and is smaller than the second one. The smaller size model is favourable in this case, because request processing on the same computation architecture takes less time. The chosen model is also instruction tuned, that, as we supposed, can enhance results in our case.
+
+Unfortunately, it seems that the inference endpoint of HuggingFace is incompatible with reflect-on-tool-usage feature of AutoGen OpenAIChatCompletionClient: as soon as we were having the feature on, we were getting an error regarding bad response format. This is why we decided to choose Groq as the inference provider for tool equipped agents. It is important to mention that despite this decision, we still use HuggingFace for paper processing. This is due to the free tier limits of Groq that do not allow the required number of tokens to be processed.
+
+On Groq, multiple models are viable candidates for the task, at least the following:
+
+\begin{itemize}
+	\item gemma2-9b-it
+	\item llama-3.1-8b-instant
+	\item llama3-8b-8192
+	\item llama3-70b-8192
+\end{itemize}
+
+Two smallest llama models both seemed to be good candidates, but we chose the ''instant`` one, for the promise of faster responses. We have also considered using the llama3-70b-8192 as a fallback, because it was shown to work good in exercise.
+
+\paragraph{Final choice:}
+
+\begin{itemize}
+	\item for processing of paper texts we use mistralai/Mistral-7B-Instruct-v0.3 through the inference endpoint of HuggingFace;
+	\item for tool usage and decision making we use llama-3.1-8b-instant through Groq.
+\end{itemize}
+
+
+\subsubsection{Research papers}
+
+
+
+
+

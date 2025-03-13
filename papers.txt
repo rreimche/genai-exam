@@ -1,0 +1,28 @@
+Towards LLM-augmented multiagent systems for
+agile software engineering
+https://dl.acm.org/doi/abs/10.1145/3691620.3695336
+?
+
+
+CodePori: Large-Scale System for Autonomous Software Development Using Multi-Agent Technology 
+https://arxiv.org/abs/2402.01411
+
+MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework
+https://arxiv.org/abs/2308.00352
+
+ChatDev: Communicative Agents for Software Development
+https://arxiv.org/abs/2307.07924
+https://aclanthology.org/2024.acl-long.810/
+
+Empowering Agile-Based Generative Software Development through Human-AI Teamwork
+https://arxiv.org/abs/2407.15568
+
+AgileCoder: Dynamic Collaborative Agents for Software Development based on Agile Methodology
+https://arxiv.org/abs/2406.11912
+
+
+LatteReview
+https://arxiv.org/pdf/2501.05468
+
+
+
