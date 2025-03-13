@@ -27,7 +27,7 @@ Our multi agent system is developed using the AutoGen\footnote{https://microsoft
 
 We also decided to use two model inference providers: Groq\footnote{https://groq.com} and HuggingFace\footnote{http://huggingface.co}. These choices, together with the choice of runtime environment are motivated by practicality: in our opinion it is more convenient to use free cloud-based infrastructure than to configure and maintain a local one.
 
-AutoGen is well documented and practical framework and Google Colab is a reliable platform which free tier is sufficient for the task. Besides that, we have already had good experiences with these tools during exercises. Pymupdf is one of the common libraties for parsing PDF files and bibtexparser is also used for parsing bibtex references. The other two libraries were the best know choices for the respective tasks.
+AutoGen is well documented and practical framework, required by the exam task statement and Google Colab is a reliable platform whith free tier is sufficient for the task. Besides that, we have already had good experiences with these tools during exercises. Pymupdf is one of the common libraties for parsing PDF files and bibtexparser is also used for parsing bibtex references. The other two libraries were the best know choices for the respective tasks.
 
 
 
@@ -89,6 +89,40 @@ Two smallest llama models both seemed to be good candidates, but we chose the ''
 
 \subsubsection{Research papers}
 
+We were interested in multi-agent LLM-based systems for end-to-end software development -- such frameworks, that, given software requirements, try to emulate real world software development process and deliver a working application. Such software process  may include not only coding, but also other software process activities, such as refinement of requirements, project management, creation of system files connected with each other, quality assurance and other activities. 
+
+We searches on Google Scholar\footnote{https://scholar.google.com/}, Arxiv, Katalog+\footnote{https://hbz-rptu.primo.exlibrisgroup.com/discovery/search?vid=49HBZ\_RTU:RPTU} and also DBLP\footnote{https://dblp.org}. We used the following search terms: multi agent, llm, software development. In the case where search engines allowed that, we searched in titles and abstracts. We have also limited the year with which the papers were dated with the timeframe of 2020 to 2024, where the search engines have allowed that. The searched resulted in a multitude of papers of which only a small amount falls into our area of interest. 
+
+\cite{he2024llm}, present in the results of multiple search databases, have caught our attention. This work, dated end 2024, reviews literature in LLM-based multi-agent systems for software engineering. Among other reviewed topics, it also write on multiple frameworks that relate to our interest. We used some of them for this work and also include work that was not reviewed in this article.
+
+
+The total amount of candidate papers was higher than the required 6 and we have used the following criteria to chose:
+
+\begin{itemize}
+	
+	\item As stated above, all selected papers must be in the field of multi-agent llm-based frameworks for end-to-end software development 	 
+	\item No work should have used any of the frameworks that other selected papers have contributed as a component. This is motivated by our interest in different and comparable frameworks.
+	\item Every work should include evaluation using at least one publicly available benchmark. Best case: all the papers use the same benchmarks to allow comparison of their efficiency.
+	\item Selected papers must cover at least 2 software development process paradigms: waterfall and agile.
+	\item All papers must be available on Arxiv to allow easy downloading by agents.
+\end{itemize}
+
+Application of this criteria has still left some freedom of choice and we have arbitrarily selected the following frameworks:
+
+
+\begin{enumerate}
+	\item MetaGPT \cite{hong2024metagptmetaprogrammingmultiagent}  (waterfall)
+	\item ChatDev \cite{qian2024chatdevcommunicativeagentssoftware} (waterfall)
+	\item CodePori \cite{rasheed2024codeporilargescaleautonomoussoftware} (waterfall) 
+	\item AgileGen \cite{zhang2024empoweringagilebasedgenerativesoftware} (agile)
+	\item AgileCoder \cite{nguyen2024agilecoderdynamiccollaborativeagents} (agile)
+	\item EvoMAC \cite{hu2024selfevolvingmultiagentcollaborationnetworks} (dynamic process)
+\end{enumerate}
+
+At least one of the first two, MetaGPT and ChatDev, is used in other selected works as a comparison competitor, this has motivated these two choices. AgileGen and AgileCoder were the only frameworks for agile software process that we have found. We have included EvoMAC because it adopts a method similar to backpropagation from the realm of neural network training to update the development process so that the set of agents used and the topology of their communication may be changed multiple times during one run automatically.
+
+
+Some of the papers are preprints, but include interesting contributions and since we are not writing this literature review for publication but only for examination and testing of our system, we consider this acceptable.
 
 
 
