@@ -1,0 +1,6 @@
+\subsection{Design}
+
+- summarizing chat text wont work, because the whole orchestration must be done with LLM
+- chunking chat text wont work either -- neither RoundRobinGroupChat nor SelectorGroupChat allow that
+- handing off like in swarm wont work either (really?), because also in swarm agents use the shared chat environment
+- calling tools one after another from one agent isnt possible -- it make seemingly parallel calls to all selected tools, but can't pass data returned from one tool to another 
