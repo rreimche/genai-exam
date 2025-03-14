@@ -39,13 +39,13 @@ To select models for our system we used the following criteria:
 \begin{itemize}
 	\item All models should be available without payment at least for non-commercial project  (as required by exam task statement).
 	\item Every model must be available at inference endpoints of either HuggingFace or Groq within free tiers.
-	\item The model used for the processing of paper texts must have context window larger than 30 000 tokens (because the longest paper among chosen amount for about 15 000 tokens and we wanted to have some slack to be sure, besides, 32 000 is one of the commonly used context lengths).
-	\item The model for tool-equipped agents must be tuned or at least allow for function calling (for the exam task requires at least some agents to use tools and such model would allow tool usage with less manual tuning).
+	\item The model used for the processing of paper texts must have context window larger than 30 000 tokens (because the longest paper among chosen amounts for about 15 000 tokens and we wanted to have some slack to be sure, besides, 32 000 is one of the commonly used context lengths).
+	\item The model for tool-equipped agents must be tuned or at least allow for function calling (for the exam task requires at least some agents to use tools and such model would allow tool usage with lesser amount of tinkering).
 	\item The model for tool-equipped agents must be compatible with AutoGen framework (for this is the framework of choice, as described in~\ref{choice:software}.
 	\item Optionally, the model used for the processing of paper texts should be adapted for summarization. Even more preferrable, if it's trained for summarization using materials like the scientific datasets used in~\cite{Cohan_2018}). This requirement is optional, because text-to-text generating models can be used for summarizations to some extent even without specialized training, for this a one of the possible text-to-text tasks. At the same time, the exam task does not state that the model must be specifically targeted for text summarization, but that it must be cabaple of it.
 \end{itemize}
 
-We started by looking for a model for paper processing. Using the model search interface of~\cite{huggingface}, we have set the following search parameteers: 
+We started by looking for a model for paper processing. Using the model search interface of~\cite{huggingface}, we have set the following search parameters: 
 
 \begin{enumerate}
 	\item Tasks: Summarization or Text2Text generation
@@ -77,7 +77,7 @@ On Groq, multiple models are viable candidates for the task, at least the follow
 	\item llama3-70b-8192
 \end{itemize}
 
-Two smallest llama models both seemed to be good candidates and we chose the ''instant`` one, for the promise of faster responses. However, this model could not provide well enough performance and we have switched to llama3-70b-8192, because it was shown in exercises that it works good for multi-agent orchestration with tool use.
+Two smallest llama models both seemed to be good candidates for the promise of faster responses. However, to process more complex conversations a larger model could be better. Besides, llama3-70b-8192 was shown to work well for multi-agent orchestration with tool use. This way we chose the latter model. 
 
 \paragraph{Final choice:}
 
@@ -126,4 +126,13 @@ Some of the papers are preprints, but include interesting contributions and sinc
 
 
 
+\subsection{Deisgn}
 
+- summarizing chat text wont work, because the whole orchestration must be done with LLM
+- chunking chat text wont work either -- neither RoundRobinGroupChat nor SelectorGroupChat allow that
+- handing off like in swarm wont work either (really?), because also in swarm agents use the shared chat environment
+- calling tools one after another from one agent isnt possible -- it make seemingly parallel calls to all selected tools, but can't pass data returned from one tool to another 
+
+\subsection{reflection}
+
+- comparing systems is very complex: two systems are equal if all the components are equal and also the outcome. components: models, prompts, agents, communication topology, tokenization, usage of additional techniques like RAG
